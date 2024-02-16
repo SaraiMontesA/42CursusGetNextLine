@@ -6,9 +6,8 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:13:08 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/02/16 17:13:09 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/02/16 22:40:26 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
 #include "get_next_line.h"
-

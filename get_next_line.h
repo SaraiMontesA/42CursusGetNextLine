@@ -6,7 +6,7 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 12:33:32 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/02/16 17:29:04 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/02/16 22:44:01 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -26,6 +26,6 @@
 // #    LIST OF FUNCTIONS                  #
 // #######################################*/
 
-char *get_next_line(int fd);
+char	*get_next_line(int fd);
 
 #endif
