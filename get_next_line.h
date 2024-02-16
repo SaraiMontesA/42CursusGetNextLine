@@ -6,7 +6,7 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 12:33:32 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/02/16 17:12:50 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/02/16 17:29:04 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -18,8 +18,9 @@
 // #######################################*/
 
 // It is used to handle variable number of function arguments.
-# include <stdarg.h>
-# include <unistd.h>
+#include <stdarg.h>
+#include <unistd.h>
+#include <stdio.h>			// FALTA QUITAR, ES SOLO PARA PRUEBAS ########################################
 
 /* #########################################	
 // #    LIST OF FUNCTIONS                  #
