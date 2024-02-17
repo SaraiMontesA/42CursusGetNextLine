@@ -6,14 +6,15 @@
 #    By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/10 12:32:19 by sarmonte          #+#    #+#              #
-#    Updated: 2024/02/16 17:24:49 by sarmonte         ###   ########.fr        #
+#    Updated: 2024/02/17 21:44:23 by sarmonte         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 NAME	=	libftget_next_line.a
 INCLUDE	= 	get_next_line.h
 
-SRC		=	get_next_line.c
+SRC		=	get_next_line.c \
+			get_next_line_utils.c
 
 OBJ		=	${SRC:.c=.o}
 

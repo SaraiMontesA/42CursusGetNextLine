@@ -6,7 +6,7 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 22:46:50 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/02/17 01:50:50 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/02/17 19:13:07 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -44,8 +44,7 @@
 		\033[0m		Reset
 */
 
-/*
-// Test para %s
+/* // Test para %s
 int	ft_test_string(char *nombre, char *value, char *str, char *sep)
 {
 	printf("\033[0;34m%-12s --> \033[0;36m%-15s \033[0;34m--> \033[0m", nombre, value);

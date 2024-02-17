@@ -6,66 +6,120 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:12:54 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/02/17 02:02:27 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/02/17 22:04:23 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
+
 #include "get_next_line.h"
 
-void	ft_bzero(void *s, size_t n)
+/*
+ ** @brief      Extract the first line from the string pointed to by temp and
+ **             shift temp address to the beginning of the next line or NULL if
+ **             the end of the string is reached.
+ **
+ ** @param[in]  temp a static pointer to the first line.
+ ** @param[out] temp a static pointer to the next line: temp + ft_strlen(line)
+ ** @return     The first line that temp was pointing to or NULL.
+ */
+
+static char	*ft_next(char **temp)
 {
-	size_t	i;
+	char	*line;
+	char	*ptr;
 
-	//printf("Estoy en ft_bzero\n");	// FALTA QUITAR, ES SOLO PARA PRUEBAS ########################################
-
-	i = 0;
-	while (i < n)
+	ptr = *temp;
+	while (*ptr && *ptr != '\n')
+		++ptr;
+	ptr += (*ptr == '\n');
+	line = ft_substr (*temp, 0, (size_t)(ptr - *temp));
+	if (!line)
 	{
-		((unsigned char *)s)[i] = 0;
-		i++;
-	}
-}
-
-static void	*ft_calloc(size_t num_elements, size_t element_size)
-{
-	void	*pointer;
-
-	//printf("Estoy en ft_calloc\n");	// FALTA QUITAR, ES SOLO PARA PRUEBAS ########################################
-
-	pointer = malloc(element_size * num_elements);
-	if (!pointer)
+		free (*temp);
 		return (NULL);
-	ft_bzero(pointer, element_size * num_elements);
-	return (pointer);
+	}
+	ptr = ft_substr (ptr, 0, ft_strlen (ptr));
+	free (*temp);
+	*temp = ptr;
+	return (line);
 }
 
-// Principal function
-/* -------------------------------------------------------------------------- */
-/* Function to read data from the file and append it to partial content.      */
-/* -------------------------------------------------------------------------- */
-static char *read_from_file(int fd)
-{
- int   bytes_read;
- char  *cup_buffer;
- static int count = 1;
+/*
+ ** @brief      Read the content of the file pointed to by fd.
+ **
+ ** @param[in]  fd a file descriptor pointing to a file.
+ ** @param[in]  temp a static pointer to the content read.
+ ** @return     A pointer to:
+ **             - a line, if BUFFER_SIZE is smaller than a line.
+ **             - a line + more, if BUFFER_SIZE is bigger than a line
+ **               or if it is not the first get_next_line call for this fd.
+ **             - NULL if there is nothing left to be read on fd.
+ */
 
- printf("ft_calloc#[%d]---", count++);
- cup_buffer = ft_calloc (3 + 1, sizeof(char));
- if (cup_buffer == NULL)
-  return (NULL);
- bytes_read = read(fd, cup_buffer, BUFFER_SIZE);
- if (bytes_read <= 0)
-  return (free (cup_buffer), NULL);
- return (cup_buffer);
+static char	*ft_read(char *temp, int fd, char *buf)
+{
+	ssize_t		r;
+
+	r = 1;
+	while (r && !ft_strchr (temp, '\n'))
+	{
+		r = read (fd, buf, BUFFER_SIZE);
+		if (r == -1)
+		{
+			free (buf);
+			free (temp);
+			return (NULL);
+		}
+		buf[r] = 0;
+		temp = ft_strjoin_free_s1 (temp, buf);
+		if (!temp)
+		{
+			free (buf);
+			return (NULL);
+		}
+	}
+	free (buf);
+	return (temp);
 }
 
-/* -------------------------------------------------------------------------- */
-/* The get_next_line function to get the next line from the file descriptor.  */
-/* -------------------------------------------------------------------------- */
-char *get_next_line(int fd)
-{
- char *basin_buffer;
+/*
+ ** @brief      Get the next line of text available on a file descriptor.
+ **
+ ** Calling get_next_line in a loop will allow us to read the text available on
+ ** the file descriptor one line at a time until the end of it.
+ **
+ ** A line is defined as a NUL or LF terminated string.
+ **
+ ** @param[in]  fd the file descriptor.
+ ** @param[out] temp a static pointer to the next line to be read or NULL.
+ ** @return     The first line to be read from temp.
+ */
 
- basin_buffer = read_from_file(fd);
- return (basin_buffer);
+char	*get_next_line(int fd)
+{
+	static char	*temp[OPEN_MAX];
+	char		*buf;
+
+	if (fd == -1 || BUFFER_SIZE < 1)
+		return (NULL);
+	if (!temp[fd])
+		temp[fd] = ft_strdup("");
+	if (!temp[fd])
+		return (NULL);
+	buf = malloc (sizeof (*buf) * (BUFFER_SIZE + 1));
+	if (!buf)
+	{
+		free (temp[fd]);
+		return (NULL);
+	}
+	temp[fd] = ft_read (temp[fd], fd, buf);
+	if (!temp[fd])
+		return (NULL);
+	if (!*temp[fd])
+	{
+		free (temp[fd]);
+		temp[fd] = NULL;
+		return (NULL);
+	}
+	return (ft_next(&temp[fd]));
 }
