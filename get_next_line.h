@@ -6,12 +6,14 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 12:33:32 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/02/17 22:04:04 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/02/17 22:09:00 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
+
+// github: https://github.com/clemedon/get_next_line
 
 /* ####################
 // #     INCLUDES     #
