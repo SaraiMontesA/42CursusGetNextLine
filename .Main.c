@@ -6,7 +6,7 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 22:46:50 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/02/16 17:33:54 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/02/17 01:50:50 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -14,6 +14,7 @@
 #include "get_next_line.h"	// Para utilizar las funciones de get_next_line
 #include <stdlib.h>			// Librería para utilizar clear en el encabezado
 #include <stdio.h>			// Para printf
+#include <fcntl.h>
 
 // ############### AQUÍ VAN LAS FUNCIONES QUE HACEN LOS TESTS ##################
 
@@ -118,20 +119,38 @@ void	ft_signature(void)
 // ############### AQUÍ VA EL MAIN #############################################
 int	main(void)
 {
+	char	*filename;
+	filename = "test.txt";
+
+	int    fd;
+	char  *next_line;
+	int  count;
+
 	ft_title();
-	
-	get_next_line(42);// %s
-/*
-	ft_printf_tests_integer();// %i
-	ft_printf_tests_char();// %c
-	ft_printf_tests_decimal();// %d
-	ft_printf_tests_unsigned();// %u
-	ft_printf_tests_hex();// %x
-	ft_printf_tests_hex2();// %X
-	ft_printf_tests_pointer();// %p
-	ft_printf_tests_percent();// %%	
-*/
-	
+
+	printf("Estoy en el main\n");
+
+	count = 0;
+	fd = open("test.txt", O_RDONLY);
+
+	if (fd == -1)
+	{
+		printf("Error opening file");
+		return (1);
+	}
+	while (1)
+	{
+		next_line = get_next_line(fd);
+		if (next_line == NULL)
+			break ;
+		count++;
+		printf("[%d]:%s\n", count, next_line);
+		free(next_line);
+		next_line = NULL;
+	}
+
+	close(fd);
+
 	ft_signature();
 	return (0);
 }
