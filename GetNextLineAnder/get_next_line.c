@@ -6,7 +6,7 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:12:54 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/03/07 18:24:36 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/03/08 16:31:36 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  ** @param[out] temp a static pointer to the next line: temp + ft_strlen(line)
  ** @return     The first line that temp was pointing to or NULL.
  */
-
+// 
 static char	*ft_next(char **temp)
 {
 	char	*line;
@@ -83,27 +83,12 @@ static char	*ft_read(char *temp, int fd, char *buf)
 
 //Por pasos:
 //1. Leer del fd al buffer una vez y copiar a la linea (hacer un malloc)
-//2. Leer del fd al buffer varias veces y ampliar la linea (hacer varios mallocs, liberar los mallocs anteriores)
+//2. Leer del fd al buffer varias veces y ampliar la linea
+	// (hacer varios mallocs, liberar los mallocs anteriores)
 //3. Dejar de leer cuando la linea tiene un \n, y devolver solo hasta el \n
-//4. Añadir variable estática buffer, dejar en el buffer lo que no se ha devuelto en la linea al final de la función y al principio añadir a la linea lo que queda en el buffer
-
-/*
- ** @brief      Get the next line of text available on a file descriptor.
- **
- ** Calling get_next_line in a loop will allow us to read the text available on
- ** the file descriptor one line at a time until the end of it.
- **
- ** A line is defined as a NUL or LF terminated string.
- **
- ** @param[in]  fd the file descriptor.
- ** @param[out] temp a static pointer to the next line to be read or NULL.
- ** @return     The first line to be read from temp.
- */
-char	*get_next_line(int fd)
-{
-	char		*line;
-	static char	buf[BUFFER_SIZE + 1];
-	ssize_t		bytes_leidos_por_read;
+//4. Añadir variable estática buffer, dejar en el buffer lo que no se ha
+	// devuelto en la linea al final de la función y al principio añadir a
+	// la linea lo que queda en el buffer
 
 /*
 	Paso 1:
@@ -118,31 +103,38 @@ char	*get_next_line(int fd)
 		Gestionar errores
 		Gestionar si he terminado de leer
 		Terminar el buffer en \0
-		Añadir cosas del buffer a la linea (hasta \n si hay \n, si no hasta el final)
+		Añadir cosas del buffer a la linea
+			(hasta \n si hay \n, si no hasta el final)
 	Mover el resto al principio del buffer
 	Devolver la linea
 */
 
+char	*get_next_line(int fd)
+{
+	char		*line;
+	static char	buf[BUFFER_SIZE + 1];
+	ssize_t		bytes_leidos_por_read;
+
 	if (fd == -1 || BUFFER_SIZE < 1)
-	 	return (NULL);
+		return (NULL);
 	if (!temp[fd])
-	 	temp[fd] = ft_strdup("");
+		temp[fd] = ft_strdup("");
 	if (!temp[fd])
-	 	return (NULL);
+		return (NULL);
 	buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buf)
 	{
 		free(temp[fd]);
-	 	return (NULL);
+		return (NULL);
 	}
 	temp[fd] = ft_read(temp[fd], fd, buf);
 	if (!temp[fd])
-	 	return (NULL);
+		return (NULL);
 	if (!*temp[fd])
 	{
 		free(temp[fd]);
 		temp[fd] = NULL;
-	 	return (NULL);
+		return (NULL);
 	}
 	return (ft_next(&temp[fd]));
 }

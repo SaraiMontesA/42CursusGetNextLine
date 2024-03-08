@@ -6,7 +6,7 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:13:08 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/03/07 17:01:51 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/03/08 16:26:32 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,8 @@
 
 #include "get_next_line.h"
 
-/*
- ** @brief      Locate a character in string.
- **
- ** "The strchr() function locates the first occurrence of c (converted to a
- ** char) in the string pointed to by s.  The terminating null character is
- ** considered to be part of the string; therefore if c is ‘\0’, the functions
- ** locate the terminating ‘\0’."
- **
- ** @see        STRCHR(3) <string.h>
- */
-
+// Busca un caracter (definido por c) en una cadena de caracteres,
+	// devuelve un puntero a char
 char	*ft_strchr(char const *s, int c)
 {
 	while (*s && *s != (unsigned char)c)
@@ -37,15 +28,7 @@ char	*ft_strchr(char const *s, int c)
 		return (0);
 }
 
-/*
- ** @brief      Find length of string.
- **
- ** "The strlen() function computes the length of the string s.  The strnlen()
- ** function attempts to compute the length of s, but never scans beyond the **
- ** first maxlen bytes of s."
- **
- ** @see        STRLEN(3) <string.h>
- */
+// Mide la longitud de una cadena de caracteres, devuelve un size_t
 size_t	ft_strlen(char *str)
 {
 	size_t	len;
@@ -56,6 +39,7 @@ size_t	ft_strlen(char *str)
 	return (len);
 }
 
+// Mide la longitud de una cadena de caracteres hasta \\n, devuelve un size_t
 size_t	ft_strlen_hasta_barran(char *str)
 {
 	size_t	len;
@@ -68,16 +52,7 @@ size_t	ft_strlen_hasta_barran(char *str)
 	return (len);
 }
 
-/*
- ** @brief      Save a copy of a string.
- **
- ** "The strdup() function allocates sufficient memory for a copy of the string
- ** s1, does the copy, and returns a pointer to it.  The pointer may
- ** subsequently be used as an argument to the function free(3)."
- **
- ** @see        STRDUP(3) <string.h>
- */
-
+// Duplica una cadena de caracteres, devuelve un puntero a char (hace malloc)
 char	*ft_strdup(char const *str)
 {
 	char	*dup;
@@ -93,6 +68,7 @@ char	*ft_strdup(char const *str)
 	return (dup);
 }
 
+// Copia n caracteres desde src a dst
 void	ft_memcpy(char *dst, char *src, size_t n)
 {
 	size_t	i;
@@ -103,56 +79,29 @@ void	ft_memcpy(char *dst, char *src, size_t n)
 		dst[i] = src[i];
 		i++;
 	}
-
 }
 
-/*
- ** @brief      Concatenate two strings into a new string (with malloc).
- **
- ** @param[in]  s1 the first string (will be free).
- ** @param[in]  s2 the second string.
- ** @return     A string made of s1 + s2 or NULL if malloc fail.
- */
-
+// Concatena dos cadenas de caracteres en una tercera (nueva) cadena
+	// (hace malloc)
 char	*ft_strjoin_free_s1(char *s1, char *s2)
 {
 	char	*s3;
 	size_t	s1_len;
 	size_t	s2_len;
 
-	//Calcular el tamaño de s1 y s2
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
-	//Reservar s3
 	s3 = malloc(sizeof(char) * (s1_len + s2_len + 1));
-	//Si falla malloc devolver null
 	if (s3 == NULL)
 		return (NULL);
-	//Copiar s1 en s3
 	ft_memcpy(s3, s1, s1_len);
-	//Copiar s2 en s3
 	ft_memcpy(s3 + s1_len, s2, s2_len);
-	//Añadir el terminador de cadena a s3
 	s3[s1_len + s2_len] = '\0';
-	//Liberar s1
 	free(s1);
-	//Devolver s3
 	return (s3);
-	//Fin de la función
 }
 
-/*
- ** @brief      Extract substring from string.
- **
- ** "Allocates (with malloc(3)) and returns a substring from the string s.
- ** The substring begins at index start and is of maximum size len."
- **
- ** @param[in]  str the string that contain the cherished substring.
- ** @param[in]  start the beginning of the substring.
- ** @param[in]  size the length of the substring.
- ** @return     The cherished substring or NULL if malloc fail.
- */
-
+// Extrae una subcadena de una cadena de caracteres (hace malloc)
 char	*ft_substr(const char *str, unsigned int start, size_t size)
 {
 	size_t	len;
