@@ -6,7 +6,7 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:13:08 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/03/08 16:26:32 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/03/08 18:02:11 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*ft_strdup(char const *str)
 	char	*dup;
 	char	*ptr;
 
-	dup = malloc (sizeof (*dup) * (ft_strlen(str) + 1));
+	dup = malloc(sizeof (*dup) * (ft_strlen(str) + 1));
 	if (!dup)
 		return (NULL);
 	ptr = dup;
@@ -107,12 +107,12 @@ char	*ft_substr(const char *str, unsigned int start, size_t size)
 	size_t	len;
 	char	*sub;
 
-	len = ft_strlen (str);
+	len = ft_strlen(str);
 	if (start >= len)
 		return (ft_strdup(""));
 	if (len - start < size)
 		size = len - start;
-	sub = malloc (sizeof (*sub) * (size + 1));
+	sub = malloc(sizeof (*sub) * (size + 1));
 	if (!sub)
 		return (NULL);
 	sub[size] = 0;

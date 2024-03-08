@@ -6,7 +6,7 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:12:54 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/03/08 16:31:36 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/03/08 18:01:38 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ static char	*ft_next(char **temp)
 	while (*ptr && *ptr != '\n')
 		++ptr;
 	ptr += (*ptr == '\n');
-	line = ft_substr (*temp, 0, (size_t)(ptr - *temp));
+	line = ft_substr(*temp, 0, (size_t)(ptr - *temp));
 	if (!line)
 	{
 		free (*temp);
 		return (NULL);
 	}
-	ptr = ft_substr (ptr, 0, ft_strlen (ptr));
+	ptr = ft_substr (ptr, 0, ft_strlen(ptr));
 	free (*temp);
 	*temp = ptr;
 	return (line);
@@ -60,20 +60,20 @@ static char	*ft_read(char *temp, int fd, char *buf)
 	ssize_t		r;
 
 	r = 1;
-	while (r && !ft_strchr (temp, '\n'))
+	while (r && !ft_strchr(temp, '\n'))
 	{
-		r = read (fd, buf, BUFFER_SIZE);
+		r = read(fd, buf, BUFFER_SIZE);
 		if (r == -1)
 		{
-			free (buf);
-			free (temp);
+			free(buf);
+			free(temp);
 			return (NULL);
 		}
 		buf[r] = 0;
-		temp = ft_strjoin_free_s1 (temp, buf);
+		temp = ft_strjoin_free_s1(temp, buf);
 		if (!temp)
 		{
-			free (buf);
+			free(buf);
 			return (NULL);
 		}
 	}
