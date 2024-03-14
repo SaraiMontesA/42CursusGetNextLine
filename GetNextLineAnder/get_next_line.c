@@ -6,7 +6,7 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:12:54 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/03/14 18:48:37 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:51:35 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static char	*ft_next(char **temp)
 		free (*temp);
 		return (NULL);
 	}
-	ptr = ft_substr (ptr, 0, ft_strlen(ptr));
+	ptr = ft_substr(ptr, 0, ft_strlen(ptr));
 	free (*temp);
 	*temp = ptr;
 	return (line);
