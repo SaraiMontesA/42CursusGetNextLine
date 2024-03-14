@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
@@ -6,14 +6,20 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:13:08 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/03/13 21:03:24 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:50:13 by sarmonte         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "get_next_line.h"
 
-// Busca un caracter (definido por c) en una cadena de caracteres,
-	// devuelve un puntero a char
+/*
+ ** @brief      Busca un caracter (definido por c) en una cadena de caracteres.
+ **
+ ** @param[in]  s puntero a la cadena de caracteres.
+ ** @param[in]  c es el caracter a buscar.
+ **
+ ** @return     devuelve un puntero a char
+ */
 char	*ft_strchr(char const *s, int c)
 {
 	while (*s && *s != (unsigned char)c)
@@ -23,8 +29,13 @@ char	*ft_strchr(char const *s, int c)
 	else
 		return (0);
 }
-
-// Mide la longitud de una cadena de caracteres, devuelve un size_t
+/*
+ ** @brief      Mide la longitud de una cadena de caracteres.
+ **
+ ** @param[in]  str puntero de la cadena de caracteres a medir.
+ **
+ ** @return     devuelve un size_t.
+ */
 size_t	ft_strlen(char *str)
 {
 	size_t	len;
@@ -34,9 +45,14 @@ size_t	ft_strlen(char *str)
 		len++;
 	return (len);
 }
-
-// Mide la longitud de una cadena de caracteres hasta \\n, devuelve un size_t
-size_t	ft_strlen_hasta_barran(char *str)
+/*
+ ** @brief      Mide la longitud de una cadena de caracteres hasta \\n.
+ **
+ ** @param[in]  str puntero de la cadena de caracteres a medir.
+ **
+ ** @return     devuelve un size_t.
+ */
+size_t	ft_strlen_hasta_barran(char *str) //TODO poner en ingles
 {
 	size_t	len;
 
@@ -48,7 +64,13 @@ size_t	ft_strlen_hasta_barran(char *str)
 	return (len);
 }
 
-// Duplica una cadena de caracteres, devuelve un puntero a char (hace malloc)
+/*
+ ** @brief      Duplica una cadena de caracteres.
+ **
+ ** @param[in]  str puntero de la cadena de caracteres a duplicar.
+ **
+ ** @return     devuelve un puntero a char (hace malloc).
+ */
 char	*ft_strdup(char const *str)
 {
 	char	*dup;
@@ -64,8 +86,16 @@ char	*ft_strdup(char const *str)
 	return (dup);
 }
 
-// Copia n caracteres desde src a dst
-void	ft_memcpy(char *dst, char *src, size_t n)
+/*
+ ** @brief      Copia n caracteres desde src a dst.
+ **
+ ** @param[in]  scr Cadena de origen.
+ ** @param[in]  scr Cadena de destino.
+ ** @param[in]  n Cantidad de caracteres a copiar.
+ **
+ ** @return     No devuelve nada.
+ */
+void	ft_memcpy(char *src, char *dst, size_t n)
 {
 	size_t	i;
 
@@ -77,8 +107,14 @@ void	ft_memcpy(char *dst, char *src, size_t n)
 	}
 }
 
-// Concatena dos cadenas de caracteres en una tercera (nueva) cadena
-	// (hace malloc)
+/*
+ ** @brief      Concatena dos cadenas de char en una tercera (nueva) cadena.
+ **
+ ** @param[in]  s1 Primera cadena.
+ ** @param[in]  s2 Segunda cadena.
+ **
+ ** @return     Devuelve s3, tercera cadena, nueva, creada con malloc.
+ */
 char	*ft_strjoin_free_s1(char *s1, char *s2)
 {
 	char	*s3;
@@ -97,7 +133,16 @@ char	*ft_strjoin_free_s1(char *s1, char *s2)
 	return (s3);
 }
 
-// Extrae una subcadena de una cadena de caracteres (hace malloc)
+/*
+ ** @brief      Extrae una subcadena de una cadena de caracteres.
+ **
+ ** @param[in]  str Cadena de caracteres original.
+ ** @param[in]  start Posición de inicio.
+ ** @param[in]  size Tamaño a extraer.
+ **
+ ** @return     Devuelve una tercera cadena, nueva, creada con malloc.
+ */
+//  (hace malloc)
 char	*ft_substr(const char *str, unsigned int start, size_t size)
 {
 	size_t	len;

@@ -6,7 +6,7 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:12:54 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/03/14 18:00:08 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:48:37 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
  **
  ** @param[in]  temp un puntero estático a la primera línea.
  ** @param[out] temp un puntero estático a la siguiente línea: temp + ft_strlen(line)
+ **
  ** @return     La primera línea a la que apuntaba temp o NULL..
- */
-// 
+ */ 
 static char	*ft_next(char **temp)
 {
 	char	*line;
@@ -48,13 +48,13 @@ static char	*ft_next(char **temp)
  **
  ** @param[in]  fd un descriptor de archivo que apunta a un archivo.
  ** @param[in]  temp un puntero estático al contenido leído.
+ **
  ** @return     Un puntero a:
  **             - una línea, si BUFFER_SIZE es menor que una línea.
  **             - una línea + más, si BUFFER_SIZE es mayor que una línea
  **               o si no es la primera llamada a get_next_line para este fd.
  **             - NULL si no queda nada por leer en fd.
  */
-
 static char	*ft_read(char *temp, int fd, char *buf)
 {
 	ssize_t		r;
