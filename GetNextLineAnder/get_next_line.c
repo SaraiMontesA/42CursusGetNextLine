@@ -6,20 +6,20 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:12:54 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/03/08 18:01:38 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:00:08 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 /*
- ** @brief      Extract the first line from the string pointed to by temp and
- **             shift temp address to the beginning of the next line or NULL if
- **             the end of the string is reached.
+ ** @brief      Extrae la primera línea de la cadena a la que apunta temp y 
+ **				desplaza la dirección de temp al comienzo de la siguiente línea o NULL si 
+ **				se alcanza el final de la cadena.
  **
- ** @param[in]  temp a static pointer to the first line.
- ** @param[out] temp a static pointer to the next line: temp + ft_strlen(line)
- ** @return     The first line that temp was pointing to or NULL.
+ ** @param[in]  temp un puntero estático a la primera línea.
+ ** @param[out] temp un puntero estático a la siguiente línea: temp + ft_strlen(line)
+ ** @return     La primera línea a la que apuntaba temp o NULL..
  */
 // 
 static char	*ft_next(char **temp)
@@ -44,15 +44,15 @@ static char	*ft_next(char **temp)
 }
 
 /*
- ** @brief      Read the content of the file pointed to by fd.
+ ** @brief      Lee el contenido del archivo al que apunta fd.
  **
- ** @param[in]  fd a file descriptor pointing to a file.
- ** @param[in]  temp a static pointer to the content read.
- ** @return     A pointer to:
- **             - a line, if BUFFER_SIZE is smaller than a line.
- **             - a line + more, if BUFFER_SIZE is bigger than a line
- **               or if it is not the first get_next_line call for this fd.
- **             - NULL if there is nothing left to be read on fd.
+ ** @param[in]  fd un descriptor de archivo que apunta a un archivo.
+ ** @param[in]  temp un puntero estático al contenido leído.
+ ** @return     Un puntero a:
+ **             - una línea, si BUFFER_SIZE es menor que una línea.
+ **             - una línea + más, si BUFFER_SIZE es mayor que una línea
+ **               o si no es la primera llamada a get_next_line para este fd.
+ **             - NULL si no queda nada por leer en fd.
  */
 
 static char	*ft_read(char *temp, int fd, char *buf)
