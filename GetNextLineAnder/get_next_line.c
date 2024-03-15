@@ -6,7 +6,7 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:12:54 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/03/15 17:26:53 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/03/15 20:09:12 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,6 @@ static char	*ft_read(char *temp, int fd, char *buf)
 }
 
 //Por pasos:
-//1. Leer del fd al buffer una vez y copiar a la linea (hacer un malloc)
-//2. Leer del fd al buffer varias veces y ampliar la linea
-	// (hacer varios mallocs, liberar los mallocs anteriores)
-//3. Dejar de leer cuando la linea tiene un \n, y devolver solo hasta el \n
-//4. Añadir variable estática buffer, dejar en el buffer lo que no se ha
-	// devuelto en la linea al final de la función y al principio añadir a
-	// la linea lo que queda en el buffer
 
 /*
 	Paso 1:
@@ -108,6 +101,75 @@ static char	*ft_read(char *temp, int fd, char *buf)
 	Mover el resto al principio del buffer
 	Devolver la linea
 */
+
+
+char	*get_next_line(int fd)
+{
+	// Variables
+	// Declaro el buffer
+	static char	temp[BUFFER_SIZE + 1];
+	// Declaro la linea
+	char 		*line;
+	// Declaro el número de bytes leidos por read
+	ssize_t		bytes_leidos_por_read;
+	
+	// Comprobaciones
+	// Compruebo que el fd sea válido
+	if (fd == -1 || BUFFER_SIZE < 1)
+		return (NULL);
+	// Compruebo que el buffer no sea nulo
+	if (temp == NULL)
+		temp = ft_strdup("");	
+
+	//1. Leer del fd al buffer una vez y copiar a la linea (hacer un malloc)
+	// Copio el contenido del buffer a la linea
+	line = ft_strdup(temp);
+	// Libero el buffer
+	free(temp);
+		
+	//2. Leer del fd al buffer varias veces y ampliar la linea
+		// (hacer varios mallocs, liberar los mallocs anteriores)
+	// Mientras no encuentro \n en la linea
+	while (!ft_strchr(line, '\n'))
+	{
+		// Leo del fd al buffer
+		bytes_leidos_por_read = read(fd, temp, BUFFER_SIZE);
+		// Gestiono errores
+		if (bytes_leidos_por_read == -1)
+		{
+			// Libero el buffer
+			free(temp);
+			// Libero la linea
+			free(line);
+			// Devuelvo NULL
+			return (NULL);
+		}
+		// Gestiono si he terminado de leer
+		if (bytes_leidos_por_read == 0)
+		{
+			// Libero el buffer
+			free(temp);
+			// Devuelvo la linea
+			return (line);
+		}
+		// Terminar el buffer en \0
+		temp[bytes_leidos_por_read] = 0;
+		// Añadir cosas del buffer a la linea
+		// (hasta \n si hay \n, si no hasta el final)
+		line = ft_strjoin_free_s1(line, temp);
+		// Mover el resto al principio del buffer
+		temp = ft_substr(temp, ft_strlen_hasta_barran(temp), ft_strlen(temp));
+	}
+	
+	// Devuelvo la linea
+	return (line);
+	
+}
+
+
+
+
+/*
 char	*get_next_line(int fd)
 {
 	char		*line;
@@ -116,24 +178,19 @@ char	*get_next_line(int fd)
 
 	if (fd == -1 || BUFFER_SIZE < 1)
 		return (NULL);
-	if (!temp[fd])
-		temp[fd] = ft_strdup(""); 
-	if (!temp[fd])
+	if (!temp)
+		temp = ft_strdup(""); 
+	if (!temp)
 		return (NULL);
-	buf = malloc(sizeof(*buf) * (BUFFER_SIZE + 1));
-	if (!buf)
+	temp = ft_read(line, fd, temp);
+	if (!temp)
+		return (NULL);
+	if (!*temp)
 	{
-		free(temp[fd]);
+		free(temp);
+		temp = NULL;
 		return (NULL);
 	}
-	temp[fd] = ft_read(temp[fd], fd, buf);
-	if (!temp[fd])
-		return (NULL);
-	if (!*temp[fd])
-	{
-		free(temp[fd]);
-		temp[fd] = NULL;
-		return (NULL);
-	}
-	return (ft_next(&temp[fd]));
+	return (ft_next(&temp));
 }
+*/

@@ -6,14 +6,14 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:13:08 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/03/15 17:21:22 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/03/15 19:17:42 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 /*
- ** @brief      Busca un caracter (definido por c) en una cadena de caracteres.
+ ** @brief      Busca un caracter en una cadena de caracteres.
  **
  ** @param[in]  s puntero a la cadena de caracteres.
  ** @param[in]  c es el caracter a buscar.
@@ -29,6 +29,7 @@ char	*ft_strchr(char const *s, int c)
 	else
 		return (0);
 }
+
 /*
  ** @brief      Mide la longitud de una cadena de caracteres.
  **
@@ -45,6 +46,7 @@ size_t	ft_strlen(char *str)
 		len++;
 	return (len);
 }
+
 /*
  ** @brief      Mide la longitud de una cadena de caracteres hasta \\n.
  **
@@ -71,7 +73,7 @@ size_t	ft_strlen_hasta_barran(char *str) //TODO poner el nombre en ingles
  **
  ** @return     devuelve un puntero a char (hace malloc).
 */
-char	*ft_strdup(char const *str)
+char	*ft_strdup(char *str)
 {
 	char	*dup;
 	char	*ptr;

@@ -6,13 +6,9 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:13:08 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/03/15 17:28:32 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:35:13 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
- ** Unmodified from Libft.
- */
 
 #include "get_next_line.h"
 
