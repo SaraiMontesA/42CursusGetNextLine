@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:12:54 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/02/17 22:04:23 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:27:58 by sarmonte         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 
 #include "get_next_line.h"
@@ -32,13 +32,13 @@ static char	*ft_next(char **temp)
 	while (*ptr && *ptr != '\n')
 		++ptr;
 	ptr += (*ptr == '\n');
-	line = ft_substr (*temp, 0, (size_t)(ptr - *temp));
+	line = ft_substr(*temp, 0, (size_t)(ptr - *temp));
 	if (!line)
 	{
 		free (*temp);
 		return (NULL);
 	}
-	ptr = ft_substr (ptr, 0, ft_strlen (ptr));
+	ptr = ft_substr(ptr, 0, ft_strlen(ptr));
 	free (*temp);
 	*temp = ptr;
 	return (line);
@@ -61,24 +61,24 @@ static char	*ft_read(char *temp, int fd, char *buf)
 	ssize_t		r;
 
 	r = 1;
-	while (r && !ft_strchr (temp, '\n'))
+	while (r && !ft_strchr(temp, '\n'))
 	{
-		r = read (fd, buf, BUFFER_SIZE);
+		r = read(fd, buf, BUFFER_SIZE);
 		if (r == -1)
 		{
-			free (buf);
-			free (temp);
+			free(buf);
+			free(temp);
 			return (NULL);
 		}
 		buf[r] = 0;
-		temp = ft_strjoin_free_s1 (temp, buf);
+		temp = ft_strjoin_free_s1(temp, buf);
 		if (!temp)
 		{
-			free (buf);
+			free(buf);
 			return (NULL);
 		}
 	}
-	free (buf);
+	free(buf);
 	return (temp);
 }
 
@@ -106,18 +106,18 @@ char	*get_next_line(int fd)
 		temp[fd] = ft_strdup("");
 	if (!temp[fd])
 		return (NULL);
-	buf = malloc (sizeof (*buf) * (BUFFER_SIZE + 1));
+	buf = malloc(sizeof (*buf) * (BUFFER_SIZE + 1));
 	if (!buf)
 	{
-		free (temp[fd]);
+		free(temp[fd]);
 		return (NULL);
 	}
-	temp[fd] = ft_read (temp[fd], fd, buf);
+	temp[fd] = ft_read(temp[fd], fd, buf);
 	if (!temp[fd])
 		return (NULL);
 	if (!*temp[fd])
 	{
-		free (temp[fd]);
+		free(temp[fd]);
 		temp[fd] = NULL;
 		return (NULL);
 	}

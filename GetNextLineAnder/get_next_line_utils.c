@@ -6,7 +6,7 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:13:08 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/03/14 18:50:13 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:21:22 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  ** @param[in]  c es el caracter a buscar.
  **
  ** @return     devuelve un puntero a char
- */
+*/
 char	*ft_strchr(char const *s, int c)
 {
 	while (*s && *s != (unsigned char)c)
@@ -35,7 +35,7 @@ char	*ft_strchr(char const *s, int c)
  ** @param[in]  str puntero de la cadena de caracteres a medir.
  **
  ** @return     devuelve un size_t.
- */
+*/
 size_t	ft_strlen(char *str)
 {
 	size_t	len;
@@ -51,8 +51,8 @@ size_t	ft_strlen(char *str)
  ** @param[in]  str puntero de la cadena de caracteres a medir.
  **
  ** @return     devuelve un size_t.
- */
-size_t	ft_strlen_hasta_barran(char *str) //TODO poner en ingles
+*/
+size_t	ft_strlen_hasta_barran(char *str) //TODO poner el nombre en ingles
 {
 	size_t	len;
 
@@ -70,7 +70,7 @@ size_t	ft_strlen_hasta_barran(char *str) //TODO poner en ingles
  ** @param[in]  str puntero de la cadena de caracteres a duplicar.
  **
  ** @return     devuelve un puntero a char (hace malloc).
- */
+*/
 char	*ft_strdup(char const *str)
 {
 	char	*dup;
@@ -94,7 +94,7 @@ char	*ft_strdup(char const *str)
  ** @param[in]  n Cantidad de caracteres a copiar.
  **
  ** @return     No devuelve nada.
- */
+*/
 void	ft_memcpy(char *src, char *dst, size_t n)
 {
 	size_t	i;
@@ -108,13 +108,13 @@ void	ft_memcpy(char *src, char *dst, size_t n)
 }
 
 /*
- ** @brief      Concatena dos cadenas de char en una tercera (nueva) cadena.
+ ** @brief      Concatena dos cadenas de char en una tercera cadena(nueva) .
  **
  ** @param[in]  s1 Primera cadena.
  ** @param[in]  s2 Segunda cadena.
  **
  ** @return     Devuelve s3, tercera cadena, nueva, creada con malloc.
- */
+*/
 char	*ft_strjoin_free_s1(char *s1, char *s2)
 {
 	char	*s3;
@@ -141,7 +141,7 @@ char	*ft_strjoin_free_s1(char *s1, char *s2)
  ** @param[in]  size Tamaño a extraer.
  **
  ** @return     Devuelve una tercera cadena, nueva, creada con malloc.
- */
+*/
 //  (hace malloc)
 char	*ft_substr(const char *str, unsigned int start, size_t size)
 {

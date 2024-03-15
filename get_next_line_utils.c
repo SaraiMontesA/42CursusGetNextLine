@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:13:08 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/02/17 22:04:41 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:28:32 by sarmonte         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 /*
  ** Unmodified from Libft.
@@ -72,7 +72,7 @@ char	*ft_strdup(char const *str)
 	char	*dup;
 	char	*ptr;
 
-	dup = malloc (sizeof (*dup) * (ft_strlen(str) + 1));
+	dup = malloc(sizeof (*dup) * (ft_strlen(str) + 1));
 	if (!dup)
 		return (NULL);
 	ptr = dup;
@@ -96,10 +96,10 @@ char	*ft_strjoin_free_s1(char *s1, char const *s2)
 	char	*p3;
 	char	*p1;
 
-	s3 = malloc (sizeof (*s3) * (ft_strlen (s1) + ft_strlen (s2) + 1));
+	s3 = malloc(sizeof (*s3) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!s3)
 	{
-		free (s1);
+		free(s1);
 		return (NULL);
 	}
 	p3 = s3;
@@ -109,7 +109,7 @@ char	*ft_strjoin_free_s1(char *s1, char const *s2)
 	while (*s2)
 		*p3++ = *s2++;
 	*p3 = 0;
-	free (s1);
+	free(s1);
 	return (s3);
 }
 
@@ -130,7 +130,7 @@ char	*ft_substr(const char *str, unsigned int start, size_t size)
 	size_t	len;
 	char	*sub;
 
-	len = ft_strlen (str);
+	len = ft_strlen(str);
 	if (start >= len)
 		return (ft_strdup(""));
 	if (len - start < size)

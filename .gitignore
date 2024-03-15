@@ -1,2 +1,2 @@
-// Este archivo sirve para que git no ignore los archivos de la lista
+// Este archivo sirve para que git ignore los archivos de la lista
 .DS_Store

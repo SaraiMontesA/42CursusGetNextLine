@@ -6,7 +6,7 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:12:54 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/03/14 18:51:35 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:26:53 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  ** @param[out] temp un puntero estático a la siguiente línea: temp + ft_strlen(line)
  **
  ** @return     La primera línea a la que apuntaba temp o NULL..
- */ 
+*/
 static char	*ft_next(char **temp)
 {
 	char	*line;
@@ -54,7 +54,7 @@ static char	*ft_next(char **temp)
  **             - una línea + más, si BUFFER_SIZE es mayor que una línea
  **               o si no es la primera llamada a get_next_line para este fd.
  **             - NULL si no queda nada por leer en fd.
- */
+*/
 static char	*ft_read(char *temp, int fd, char *buf)
 {
 	ssize_t		r;
@@ -108,20 +108,19 @@ static char	*ft_read(char *temp, int fd, char *buf)
 	Mover el resto al principio del buffer
 	Devolver la linea
 */
-
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	buf[BUFFER_SIZE + 1];
+	static char	temp[BUFFER_SIZE + 1];
 	ssize_t		bytes_leidos_por_read;
 
 	if (fd == -1 || BUFFER_SIZE < 1)
 		return (NULL);
 	if (!temp[fd])
-		temp[fd] = ft_strdup("");
+		temp[fd] = ft_strdup(""); 
 	if (!temp[fd])
 		return (NULL);
-	buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	buf = malloc(sizeof(*buf) * (BUFFER_SIZE + 1));
 	if (!buf)
 	{
 		free(temp[fd]);
