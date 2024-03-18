@@ -6,19 +6,17 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:12:54 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/03/18 18:42:04 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:38:22 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 /*
- ** @brief      Extrae la primera línea de la cadena a la que apunta temp y 
- **				desplaza la dirección de temp al comienzo de la siguiente línea o NULL si 
- **				se alcanza el final de la cadena.
+ ** @brief      Lee el contenido del archivo al que apunta fd.
  **
- ** @param[in]  temp un puntero estático a la primera línea.
- ** @param[out] temp un puntero estático a la siguiente línea: temp + ft_strlen(line)
+ ** @param[in]  fd un descriptor de archivo
+ ** @param[out] buf un puntero estático al contenido leído.
  **
  ** @return     La primera línea a la que apuntaba temp o NULL..
 */
@@ -27,7 +25,7 @@ char	*read_line(int fd, char *buf)
 	char	*line;
 	int		countread;
 
-	countread = -2;
+	countread = 1;
 	line = ft_strdup(buf);
 	while (!(ft_strchr(line, '\n')) && countread != 0)
 	{
@@ -45,18 +43,17 @@ char	*read_line(int fd, char *buf)
 }
 
 /*
- ** @brief      Lee el contenido del archivo al que apunta fd.
+ ** @brief      Prepara el bufer para la próxima lectura.
  **
- ** @param[in]  fd un descriptor de archivo que apunta a un archivo.
- ** @param[in]  temp un puntero estático al contenido leído.
+ ** @param[in]  *buf un puntero estático al contenido leído.
+ ** @param[in]  *line un puntero a la línea leída.
+ ** @param[in]  *newline un puntero a la primera ocurrencia de '\n' en line.
  **
- ** @return     Un puntero a:
- **             - una línea, si BUFFER_SIZE es menor que una línea.
- **             - una línea + más, si BUFFER_SIZE es mayor que una línea
- **               o si no es la primera llamada a get_next_line para este fd.
- **             - NULL si no queda nada por leer en fd.
+ ** @return     No devuelve nada
+ ** 		   - Copia el contenido de newline + 1 a buf.
+ ** 		   - Copia el contenido de line a buf si newline es NULL.
+ ** 		   - Establece el último carácter de line a '\0'.
 */
-
 void	prepare_buffer(char *buf, char *line, char *newline)
 {
 	int	to_copy;
@@ -75,10 +72,9 @@ void	prepare_buffer(char *buf, char *line, char *newline)
 }
 
 /*
- ** @brief      Lee el contenido del archivo al que apunta fd.
+ ** @brief      Función principal que lee el contenido de un archivo.
  **
  ** @param[in]  fd un descriptor de archivo que apunta a un archivo.
- ** @param[in]  temp un puntero estático al contenido leído.
  **
  ** @return     Un puntero a:
  **             - una línea, si BUFFER_SIZE es menor que una línea.
