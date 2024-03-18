@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:12:54 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/03/15 20:09:12 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/03/18 01:16:47 by sarmonte         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "get_next_line.h"
 
@@ -105,28 +105,24 @@ static char	*ft_read(char *temp, int fd, char *buf)
 
 char	*get_next_line(int fd)
 {
-	// Variables
-	// Declaro el buffer
 	static char	temp[BUFFER_SIZE + 1];
-	// Declaro la linea
 	char 		*line;
-	// Declaro el número de bytes leidos por read
 	ssize_t		bytes_leidos_por_read;
-	
-	// Comprobaciones
-	// Compruebo que el fd sea válido
+
 	if (fd == -1 || BUFFER_SIZE < 1)
 		return (NULL);
+
 	// Compruebo que el buffer no sea nulo
-	if (temp == NULL)
-		temp = ft_strdup("");	
+	if (temp[fd] == NULL)
+		temp[fd] = ft_strdup("");
 
 	//1. Leer del fd al buffer una vez y copiar a la linea (hacer un malloc)
 	// Copio el contenido del buffer a la linea
 	line = ft_strdup(temp);
+
 	// Libero el buffer
 	free(temp);
-		
+
 	//2. Leer del fd al buffer varias veces y ampliar la linea
 		// (hacer varios mallocs, liberar los mallocs anteriores)
 	// Mientras no encuentro \n en la linea
@@ -154,16 +150,16 @@ char	*get_next_line(int fd)
 		}
 		// Terminar el buffer en \0
 		temp[bytes_leidos_por_read] = 0;
+
 		// Añadir cosas del buffer a la linea
 		// (hasta \n si hay \n, si no hasta el final)
 		line = ft_strjoin_free_s1(line, temp);
+
 		// Mover el resto al principio del buffer
 		temp = ft_substr(temp, ft_strlen_hasta_barran(temp), ft_strlen(temp));
 	}
-	
 	// Devuelvo la linea
 	return (line);
-	
 }
 
 
