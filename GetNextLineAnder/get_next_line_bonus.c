@@ -3,43 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgomez-m <aecm.davidgomez@gmail.com>       +#+  +:+       +#+        */
+/*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 17:18:53 by dgomez-m          #+#    #+#             */
-/*   Updated: 2023/12/30 04:50:44 by dgomez-m         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:36:53 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-void	ft_bzero(void *s, size_t n)
-{
-	unsigned char	*ptr;
-
-	ptr = s;
-	while (n--)
-		*ptr++ = 0;
-}
-
+/*
+ ** @brief      Prepara el bufer para la próxima lectura.
+ **
+ ** @param[in]  fd un descriptor de archivo
+ ** @param[out] buf un puntero estático al contenido leído.
+ **
+ ** @return     La primera línea a la que apuntaba temp o NULL..
+*/
 char	*read_line(int fd, char *buf)
 {
 	char	*line;
 	int		countread;
 
+	countread = 1;
 	line = ft_strdup(buf);
-	while (!(ft_strchr(line, '\n')))
+	while (!(ft_strchr(line, '\n')) && countread != 0)
 	{
 		countread = read(fd, buf, BUFFER_SIZE);
 		if (countread == -1)
 		{
 			free(line);
-			ft_bzero(buf, BUFFER_SIZE + 1);
+			buf[0] = '\0';
 			return (NULL);
 		}
 		if (countread == 0)
 			break ;
 		buf[countread] = '\0';
-		line = ft_strjoin(line, buf, countread);
+		line = ft_strjoin_free_s1(line, buf, countread);
 	}
 	return (line);
 }

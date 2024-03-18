@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgomez-m <aecm.davidgomez@gmail.com>       +#+  +:+       +#+        */
+/*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 17:34:16 by dgomez-m          #+#    #+#             */
-/*   Updated: 2023/12/30 06:01:27 by dgomez-m         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:03:06 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ char	*ft_strchr(char *s, int c);
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char	*ft_strdup(const char *src);
-char	*ft_strjoin(char *s1, char const *s2, size_t len);
+char	*ft_strjoin_free_s1(char *s1, char *s2, size_t len);
 
 #endif
