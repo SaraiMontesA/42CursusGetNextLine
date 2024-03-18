@@ -6,7 +6,7 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:12:54 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/03/15 20:09:12 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:42:04 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,25 @@
  **
  ** @return     La primera línea a la que apuntaba temp o NULL..
 */
-static char	*ft_next(char **temp)
+char	*read_line(int fd, char *buf)
 {
 	char	*line;
-	char	*ptr;
+	int		countread;
 
-	ptr = *temp;
-	while (*ptr && *ptr != '\n')
-		++ptr;
-	ptr += (*ptr == '\n');
-	line = ft_substr(*temp, 0, (size_t)(ptr - *temp));
-	if (!line)
+	countread = -2;
+	line = ft_strdup(buf);
+	while (!(ft_strchr(line, '\n')) && countread != 0)
 	{
-		free (*temp);
-		return (NULL);
+		countread = read(fd, buf, BUFFER_SIZE);
+		if (countread == -1)
+		{
+			free(line);
+			buf[0] = '\0';
+			return (NULL);
+		}
+		buf[countread] = '\0';
+		line = ft_strjoin_free_s1(line, buf, countread);
 	}
-	ptr = ft_substr(ptr, 0, ft_strlen(ptr));
-	free (*temp);
-	*temp = ptr;
 	return (line);
 }
 
@@ -55,142 +56,48 @@ static char	*ft_next(char **temp)
  **               o si no es la primera llamada a get_next_line para este fd.
  **             - NULL si no queda nada por leer en fd.
 */
-static char	*ft_read(char *temp, int fd, char *buf)
-{
-	ssize_t		r;
 
-	r = 1;
-	while (r && !ft_strchr(temp, '\n'))
+void	prepare_buffer(char *buf, char *line, char *newline)
+{
+	int	to_copy;
+
+	if (newline != NULL)
 	{
-		r = read(fd, buf, BUFFER_SIZE);
-		if (r == -1)
-		{
-			free(buf);
-			free(temp);
-			return (NULL);
-		}
-		buf[r] = 0;
-		temp = ft_strjoin_free_s1(temp, buf);
-		if (!temp)
-		{
-			free(buf);
-			return (NULL);
-		}
+		to_copy = newline - line + 1;
+		ft_strlcpy(buf, newline + 1, BUFFER_SIZE + 1);
 	}
-	free (buf);
-	return (temp);
+	else
+	{
+		to_copy = ft_strlen(line);
+		ft_strlcpy(buf, "", BUFFER_SIZE + 1);
+	}
+	line[to_copy] = '\0';
 }
 
-//Por pasos:
-
 /*
-	Paso 1:
-	Leer del fd al buffer
-	Añadir del buffer a la linea
-	Devolver la linea
-
-	Paso 4:
-	Mover el resto guardado desde el buffer a la linea
-	Mientras no encuentro \n en la linea
-		Leer del fd al buffer
-		Gestionar errores
-		Gestionar si he terminado de leer
-		Terminar el buffer en \0
-		Añadir cosas del buffer a la linea
-			(hasta \n si hay \n, si no hasta el final)
-	Mover el resto al principio del buffer
-	Devolver la linea
+ ** @brief      Lee el contenido del archivo al que apunta fd.
+ **
+ ** @param[in]  fd un descriptor de archivo que apunta a un archivo.
+ ** @param[in]  temp un puntero estático al contenido leído.
+ **
+ ** @return     Un puntero a:
+ **             - una línea, si BUFFER_SIZE es menor que una línea.
+ **             - una línea + más, si BUFFER_SIZE es mayor que una línea
+ **               o si no es la primera llamada a get_next_line para este fd.
+ **             - NULL si no queda nada por leer en fd.
 */
-
-
 char	*get_next_line(int fd)
 {
-	// Variables
-	// Declaro el buffer
-	static char	temp[BUFFER_SIZE + 1];
-	// Declaro la linea
-	char 		*line;
-	// Declaro el número de bytes leidos por read
-	ssize_t		bytes_leidos_por_read;
-	
-	// Comprobaciones
-	// Compruebo que el fd sea válido
-	if (fd == -1 || BUFFER_SIZE < 1)
-		return (NULL);
-	// Compruebo que el buffer no sea nulo
-	if (temp == NULL)
-		temp = ft_strdup("");	
-
-	//1. Leer del fd al buffer una vez y copiar a la linea (hacer un malloc)
-	// Copio el contenido del buffer a la linea
-	line = ft_strdup(temp);
-	// Libero el buffer
-	free(temp);
-		
-	//2. Leer del fd al buffer varias veces y ampliar la linea
-		// (hacer varios mallocs, liberar los mallocs anteriores)
-	// Mientras no encuentro \n en la linea
-	while (!ft_strchr(line, '\n'))
-	{
-		// Leo del fd al buffer
-		bytes_leidos_por_read = read(fd, temp, BUFFER_SIZE);
-		// Gestiono errores
-		if (bytes_leidos_por_read == -1)
-		{
-			// Libero el buffer
-			free(temp);
-			// Libero la linea
-			free(line);
-			// Devuelvo NULL
-			return (NULL);
-		}
-		// Gestiono si he terminado de leer
-		if (bytes_leidos_por_read == 0)
-		{
-			// Libero el buffer
-			free(temp);
-			// Devuelvo la linea
-			return (line);
-		}
-		// Terminar el buffer en \0
-		temp[bytes_leidos_por_read] = 0;
-		// Añadir cosas del buffer a la linea
-		// (hasta \n si hay \n, si no hasta el final)
-		line = ft_strjoin_free_s1(line, temp);
-		// Mover el resto al principio del buffer
-		temp = ft_substr(temp, ft_strlen_hasta_barran(temp), ft_strlen(temp));
-	}
-	
-	// Devuelvo la linea
-	return (line);
-	
-}
-
-
-
-
-/*
-char	*get_next_line(int fd)
-{
+	static char	buf[BUFFER_SIZE + 1];
 	char		*line;
-	static char	temp[BUFFER_SIZE + 1];
-	ssize_t		bytes_leidos_por_read;
+	char		*newline;
 
-	if (fd == -1 || BUFFER_SIZE < 1)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!temp)
-		temp = ft_strdup(""); 
-	if (!temp)
-		return (NULL);
-	temp = ft_read(line, fd, temp);
-	if (!temp)
-		return (NULL);
-	if (!*temp)
-	{
-		free(temp);
-		temp = NULL;
-		return (NULL);
-	}
-	return (ft_next(&temp));
+	line = read_line(fd, buf);
+	if (!line || ft_strlen(line) == 0)
+		return (free(line), NULL);
+	newline = ft_strchr(line, '\n');
+	prepare_buffer(buf, line, newline);
+	return (line);
 }
-*/

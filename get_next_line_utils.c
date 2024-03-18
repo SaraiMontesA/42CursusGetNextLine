@@ -6,7 +6,7 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:13:08 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/03/15 17:35:13 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/03/18 12:56:41 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
  ** @see        STRCHR(3) <string.h>
  */
 
-char	*ft_strchr(char const *s, int c)
+char	*ft_strchr(char *s, int c)
 {
 	while (*s && *s != (unsigned char)c)
 		++s;

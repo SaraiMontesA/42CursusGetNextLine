@@ -6,7 +6,7 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 12:33:32 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/03/07 18:18:02 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:06:36 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,12 @@
  ** Libft functions required by get_next_line_utils.
  */
 
-char	*ft_strchr(char const *s, int c);
-size_t	ft_strlen(char  *str);
-char	*ft_strdup(char const *s1);
-char	*ft_strjoin_free_s1(char *s1, char *s2);
-char	*ft_substr(char const *str, unsigned int start, size_t size);
+char	*ft_strchr(char *s, int c);
+size_t	ft_strlen(const char *s);
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+char	*ft_strdup(const char *src);
+char	*ft_strjoin_free_s1(char *s1, char *s2, size_t len);
+//char	*ft_substr(char const *str, unsigned int start, size_t size);
 
 /*
  ** get_next_line.c
@@ -71,6 +72,9 @@ char	*ft_substr(char const *str, unsigned int start, size_t size);
 
 /* static char *ft_next(char **temp) */
 /* static char *ft_read(char *temp, int fd) */
+//void	ft_bzero(void *s, size_t n);
+char	*read_line(int fd, char *buf);
+void	prepare_buffer(char *buf, char *line, char *newline);
 char	*get_next_line(int fd);
 
 #endif
