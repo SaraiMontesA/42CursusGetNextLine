@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/16 17:13:08 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/03/18 19:54:00 by sarmonte         ###   ########.fr       */
+/*   Created: 2023/12/29 16:32:52 by dgomez-m          #+#    #+#             */
+/*   Updated: 2024/03/18 20:12:43 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 /*
- ** @brief      Busca un caracter en una cadena de caracteres.
+ ** @brief      Searches for a character in a string.
  **
- ** @param[in]  s puntero a la cadena de caracteres.
- ** @param[in]  c es el caracter a buscar.
+ ** @param[in]  s pointer to the string.
+ ** @param[in]  c is the character to search for.
  **
- ** @return     devuelve un puntero a char
+ ** @return     returns a pointer to char
 */
 char	*ft_strchr(char *s, int c)
 {
@@ -32,30 +32,30 @@ char	*ft_strchr(char *s, int c)
 }
 
 /*
- ** @brief      Mide la longitud de una cadena de caracteres.
+ ** @brief      Measures the length of a string.
  **
- ** @param[in]  str puntero de la cadena de caracteres a medir.
+ ** @param[in]  str pointer to the string to measure.
  **
- ** @return     devuelve un size_t.
+ ** @return     returns a size_t.
 */
 size_t	ft_strlen(const char *s)
 {
-	size_t	len;
+	size_t	i;
 
-	len = 0;
-	while (s[len])
-		len++;
-	return (len);
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
 }
 
 /*
- ** @brief      Copia la cadena src en dst.
+ ** @brief      Copies the string src into dst.
  **
- ** @param[in]  dst puntero de la cadena de caracteres destino.
- ** @param[in]  src puntero de la cadena de caracteres origen.
- ** @param[in]  dstsize tamaño del buffer de destino.
+ ** @param[in]  dst pointer to the destination string.
+ ** @param[in]  src pointer to the source string.
+ ** @param[in]  dstsize size of the destination buffer.
  **
- ** @return     devuelve un size_t.
+ ** @return     returns a size_t.
 */
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
@@ -77,11 +77,11 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 }
 
 /*
- ** @brief      Duplica una cadena de caracteres.
+ ** @brief      Duplicates a string.
  **
- ** @param[in]  str puntero de la cadena de caracteres a duplicar.
+ ** @param[in]  str pointer to the string to duplicate.
  **
- ** @return     devuelve un puntero a char (hace malloc).
+ ** @return     returns a pointer to char (does malloc).
 */
 char	*ft_strdup(const char *src)
 {
@@ -99,12 +99,12 @@ char	*ft_strdup(const char *src)
 }
 
 /*
- ** @brief      Concatena dos cadenas de char en una tercera cadena(nueva) .
+ ** @brief      Concatenates two char strings into a third (new) string.
  **
- ** @param[in]  s1 Primera cadena.
- ** @param[in]  s2 Segunda cadena.
+ ** @param[in]  s1 First string.
+ ** @param[in]  s2 Second string.
  **
- ** @return     Devuelve s3, tercera cadena, nueva, creada con malloc.
+ ** @return     Returns s3, third string, new, created with malloc.
 */
 char	*ft_strjoin_free_s1(char *s1, char *s2, size_t len)
 {

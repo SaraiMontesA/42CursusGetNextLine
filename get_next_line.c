@@ -6,119 +6,94 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:12:54 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/03/15 19:28:43 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/03/18 20:05:52 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 /*
- ** @brief      Extract the first line from the string pointed to by temp and
- **             shift temp address to the beginning of the next line or NULL if
- **             the end of the string is reached.
+ ** @brief      Reads the content of the file pointed to by fd.
  **
- ** @param[in]  temp a static pointer to the first line.
- ** @param[out] temp a static pointer to the next line: temp + ft_strlen(line)
- ** @return     The first line that temp was pointing to or NULL.
- */
-
-static char	*ft_next(char **temp)
+ ** @param[in]  fd a file descriptor
+ ** @param[out] buf a static pointer to the read content.
+ **
+ ** @return     The first line pointed to by temp or NULL.
+*/
+char	*read_line(int fd, char *buf)
 {
 	char	*line;
-	char	*ptr;
+	int		countread;
 
-	ptr = *temp;
-	while (*ptr && *ptr != '\n')
-		++ptr;
-	ptr += (*ptr == '\n');
-	line = ft_substr(*temp, 0, (size_t)(ptr - *temp));
-	if (!line)
+	countread = 1;
+	line = ft_strdup(buf);
+	while (!(ft_strchr(line, '\n')) && countread != 0)
 	{
-		free (*temp);
-		return (NULL);
+		countread = read(fd, buf, BUFFER_SIZE);
+		if (countread == -1)
+		{
+			free(line);
+			buf[0] = '\0';
+			return (NULL);
+		}
+		buf[countread] = '\0';
+		line = ft_strjoin_free_s1(line, buf, countread);
 	}
-	ptr = ft_substr(ptr, 0, ft_strlen(ptr));
-	free (*temp);
-	*temp = ptr;
 	return (line);
 }
 
 /*
- ** @brief      Read the content of the file pointed to by fd.
+ ** @brief      Prepares the buffer for the next read.
  **
- ** @param[in]  fd a file descriptor pointing to a file.
- ** @param[in]  temp a static pointer to the content read.
- ** @return     A pointer to:
- **             - a line, if BUFFER_SIZE is smaller than a line.
- **             - a line + more, if BUFFER_SIZE is bigger than a line
- **               or if it is not the first get_next_line call for this fd.
- **             - NULL if there is nothing left to be read on fd.
- */
-
-static char	*ft_read(char *temp, int fd, char *buf)
+ ** @param[in]  *buf a static pointer to the read content.
+ ** @param[in]  *line a pointer to the read line.
+ ** @param[in]  *newline a pointer to the first occurrence of '\n' in line.
+ **
+ ** @return     Returns nothing.
+ ** 		   - Copies the content of newline + 1 to buf.
+ ** 		   - Copies the content of line to buf if newline is NULL.
+ ** 		   - Sets the last character of line to '\0'.
+*/
+void	prepare_buffer(char *buf, char *line, char *newline)
 {
-	ssize_t		r;
+	int	to_copy;
 
-	r = 1;
-	while (r && !ft_strchr(temp, '\n'))
+	if (newline != NULL)
 	{
-		r = read(fd, buf, BUFFER_SIZE);
-		if (r == -1)
-		{
-			free(buf);
-			free(temp);
-			return (NULL);
-		}
-		buf[r] = 0;
-		temp = ft_strjoin_free_s1(temp, buf);
-		if (!temp)
-		{
-			free(buf);
-			return (NULL);
-		}
+		to_copy = newline - line + 1;
+		ft_strlcpy(buf, newline + 1, BUFFER_SIZE + 1);
 	}
-	free(buf);
-	return (temp);
+	else
+	{
+		to_copy = ft_strlen(line);
+		ft_strlcpy(buf, "", BUFFER_SIZE + 1);
+	}
+	line[to_copy] = '\0';
 }
 
 /*
- ** @brief      Get the next line of text available on a file descriptor.
+ ** @brief      Main function that reads the content of a file.
  **
- ** Calling get_next_line in a loop will allow us to read the text available on
- ** the file descriptor one line at a time until the end of it.
+ ** @param[in]  fd a file descriptor that points to a file.
  **
- ** A line is defined as a NUL or LF terminated string.
- **
- ** @param[in]  fd the file descriptor.
- ** @param[out] temp a static pointer to the next line to be read or NULL.
- ** @return     The first line to be read from temp.
- */
-
+ ** @return     A pointer to:
+ **             - a line, if BUFFER_SIZE is less than a line.
+ **             - a line + more, if BUFFER_SIZE is greater than a line.
+ **               or if it is not the first call to get_next_line for this fd.
+ **             - NULL if there is nothing left to read in fd.
+*/
 char	*get_next_line(int fd)
 {
-	static char	*temp[OPEN_MAX];
-	char		*buf;
+	static char	buf[BUFFER_SIZE + 1];
+	char		*line;
+	char		*newline;
 
-	if (fd == -1 || BUFFER_SIZE < 1)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!temp[fd])
-		temp[fd] = ft_strdup("");
-	if (!temp[fd])
-		return (NULL);
-	buf = malloc(sizeof (*buf) * (BUFFER_SIZE + 1));
-	if (!buf)
-	{
-		free(temp[fd]);
-		return (NULL);
-	}
-	temp[fd] = ft_read(temp[fd], fd, buf);
-	if (!temp[fd])
-		return (NULL);
-	if (!*temp[fd])
-	{
-		free(temp[fd]);
-		temp[fd] = NULL;
-		return (NULL);
-	}
-	return (ft_next(&temp[fd]));
+	line = read_line(fd, buf);
+	if (!line || ft_strlen(line) == 0)
+		return (free(line), NULL);
+	newline = ft_strchr(line, '\n');
+	prepare_buffer(buf, line, newline);
+	return (line);
 }

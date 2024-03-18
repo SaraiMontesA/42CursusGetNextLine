@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/10 12:33:32 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/03/18 19:02:24 by sarmonte         ###   ########.fr       */
+/*   Created: 2023/12/29 17:34:16 by dgomez-m          #+#    #+#             */
+/*   Updated: 2024/03/18 20:15:32 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 // ####################
 // #     INCLUDES     #
 // ####################
 
 # include <stdlib.h>
+# include <fcntl.h>
+# include <limits.h>
 # include <unistd.h>
 
 // ####################
@@ -35,18 +37,17 @@
 /*
  ** @brief      The maximum number of file that can be read simultaneously by
  **             get_next_line.
+*/
 
 # ifndef OPEN_MAX
-#  define OPEN_MAX 1024
+#  define OPEN_MAX 512
 # endif
- */
 
 // ####################
 // #    PROTOTYPES    #
 // ####################
 
 char	*get_next_line(int fd);
-
 char	*ft_strchr(char *s, int c);
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);

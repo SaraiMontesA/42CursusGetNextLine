@@ -6,136 +6,121 @@
 /*   By: sarmonte <sarmonte@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:13:08 by sarmonte          #+#    #+#             */
-/*   Updated: 2024/03/18 12:56:41 by sarmonte         ###   ########.fr       */
+/*   Updated: 2024/03/18 20:12:36 by sarmonte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 /*
- ** @brief      Locate a character in string.
+ ** @brief      Searches for a character in a string.
  **
- ** "The strchr() function locates the first occurrence of c (converted to a
- ** char) in the string pointed to by s.  The terminating null character is
- ** considered to be part of the string; therefore if c is ‘\0’, the functions
- ** locate the terminating ‘\0’."
+ ** @param[in]  s pointer to the string.
+ ** @param[in]  c is the character to search for.
  **
- ** @see        STRCHR(3) <string.h>
- */
-
+ ** @return     returns a pointer to char
+*/
 char	*ft_strchr(char *s, int c)
 {
-	while (*s && *s != (unsigned char)c)
-		++s;
-	if (*s == (unsigned char)c)
-		return ((char *)(unsigned long)s);
-	else
-		return (0);
-}
-
-/*
- ** @brief      Find length of string.
- **
- ** "The strlen() function computes the length of the string s.  The strnlen()
- ** function attempts to compute the length of s, but never scans beyond the **
- ** first maxlen bytes of s."
- **
- ** @see        STRLEN(3) <string.h>
- */
-
-size_t	ft_strlen(char const *str)
-{
-	char const	*ptr;
-
-	ptr = str;
-	while (*ptr)
-		++ptr;
-	return ((size_t)(ptr - str));
-}
-
-/*
- ** @brief      Save a copy of a string.
- **
- ** "The strdup() function allocates sufficient memory for a copy of the string
- ** s1, does the copy, and returns a pointer to it.  The pointer may
- ** subsequently be used as an argument to the function free(3)."
- **
- ** @see        STRDUP(3) <string.h>
- */
-
-char	*ft_strdup(char const *str)
-{
-	char	*dup;
-	char	*ptr;
-
-	dup = malloc(sizeof (*dup) * (ft_strlen(str) + 1));
-	if (!dup)
-		return (NULL);
-	ptr = dup;
-	while (*str)
-		*ptr++ = *str++;
-	*ptr = 0;
-	return (dup);
-}
-
-/*
- ** @brief      Concatenate two strings into a new string (with malloc).
- **
- ** @param[in]  s1 the first string (will be free).
- ** @param[in]  s2 the second string.
- ** @return     A string made of s1 + s2 or NULL if malloc fail.
- */
-
-char	*ft_strjoin_free_s1(char *s1, char const *s2)
-{
-	char	*s3;
-	char	*p3;
-	char	*p1;
-
-	s3 = malloc(sizeof (*s3) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (!s3)
+	while (*s)
 	{
-		free(s1);
-		return (NULL);
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
 	}
-	p3 = s3;
-	p1 = s1;
-	while (*p1)
-		*p3++ = *p1++;
-	while (*s2)
-		*p3++ = *s2++;
-	*p3 = 0;
-	free(s1);
-	return (s3);
+	return (NULL);
 }
 
 /*
- ** @brief      Extract substring from string.
+ ** @brief      Measures the length of a string.
  **
- ** "Allocates (with malloc(3)) and returns a substring from the string s.
- ** The substring begins at index start and is of maximum size len."
+ ** @param[in]  str pointer to the string to measure.
  **
- ** @param[in]  str the string that contain the cherished substring.
- ** @param[in]  start the beginning of the substring.
- ** @param[in]  size the length of the substring.
- ** @return     The cherished substring or NULL if malloc fail.
- */
-
-char	*ft_substr(const char *str, unsigned int start, size_t size)
+ ** @return     returns a size_t.
+*/
+size_t	ft_strlen(const char *s)
 {
 	size_t	len;
-	char	*sub;
 
-	len = ft_strlen(str);
-	if (start >= len)
-		return (ft_strdup(""));
-	if (len - start < size)
-		size = len - start;
-	sub = malloc (sizeof (*sub) * (size + 1));
-	if (!sub)
+	len = 0;
+	while (s[len])
+		len++;
+	return (len);
+}
+
+/*
+ ** @brief      Copies the string src into dst.
+ **
+ ** @param[in]  dst pointer to the destination string.
+ ** @param[in]  src pointer to the source string.
+ ** @param[in]  dstsize size of the destination buffer.
+ **
+ ** @return     returns a size_t.
+*/
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+{
+	size_t	srcsize;
+	size_t	i;
+
+	srcsize = ft_strlen(src);
+	i = 0;
+	if (dstsize > 0)
+	{
+		while (i < srcsize && i < dstsize - 1)
+		{
+			dst[i] = src[i];
+			i++;
+		}
+		dst[i] = '\0';
+	}
+	return (srcsize);
+}
+
+/*
+ ** @brief      Duplicates a string.
+ **
+ ** @param[in]  str pointer to the string to duplicate.
+ **
+ ** @return     returns a pointer to char (does malloc).
+*/
+char	*ft_strdup(const char *src)
+{
+	char	*dst;
+	size_t	len;
+
+	if (src == NULL)
 		return (NULL);
-	sub[size] = 0;
-	while (size--)
-		sub[size] = str[start + size];
-	return (sub);
+	len = ft_strlen(src) + 1;
+	dst = malloc(len);
+	if (dst == NULL)
+		return (NULL);
+	ft_strlcpy(dst, src, len);
+	return (dst);
+}
+
+/*
+ ** @brief      Concatenates two char strings into a third (new) string.
+ **
+ ** @param[in]  s1 First string.
+ ** @param[in]  s2 Second string.
+ **
+ ** @return     Returns s3, third string, new, created with malloc.
+*/
+char	*ft_strjoin_free_s1(char *s1, char *s2, size_t len)
+{
+	size_t	s1_len;
+	size_t	s2_len;
+	char	*join;
+
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	s1_len = ft_strlen(s1);
+	s2_len = len;
+	join = (char *)malloc((s1_len + s2_len + 1) * sizeof(char));
+	if (join == NULL)
+		return (NULL);
+	ft_strlcpy(join, s1, s1_len + 1);
+	ft_strlcpy((join + s1_len), s2, s2_len + 1);
+	free(s1);
+	return (join);
 }
